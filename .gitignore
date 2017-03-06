@@ -24,6 +24,3 @@ _testmain.go
 *.exe
 *.test
 *.prof
-
-# Test Files
-ddt/_ddt/ddt_test.json
