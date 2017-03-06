@@ -13,7 +13,7 @@ Copy dependencies to the `vendor` folder.
 See <https://golang.org/cmd/go/#hdr-Vendor_Directories> for more details.
 
 ## Makefile
-It's there to take care of some best practices for you, please use it.
+It's there to take care of some best practices for you; please use it.
 
 ## Code Review Guidelines
 See <https://github.com/golang/go/wiki/CodeReviewComments>.

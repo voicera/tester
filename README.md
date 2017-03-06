@@ -1,4 +1,9 @@
 # Tester: Test More, Type Less
+
+[![Build Status](https://travis-ci.org/workfit/tester.svg?branch=master)](https://travis-ci.org/workfit/tester)
+[![Go Report Card](https://goreportcard.com/badge/github.com/workfit/tester)](https://goreportcard.com/report/github.com/workfit/tester)
+[![GoDoc](https://godoc.org/github.com/workfit/tester?status.svg)](https://godoc.org/github.com/workfit/tester)
+
 Lightweight test utilities to use with Go's testing package.
 
 ## Features
