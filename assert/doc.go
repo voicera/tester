@@ -6,7 +6,7 @@ for example:
 
 This way, the assert statement reads well; it flows like a proper sentence.
 
-In addition, one can easily tell which value is the test case got (actual)
+Also, one can easily tell which value is the test case got (actual)
 and which it wanted (expected); this is key to printing the values correctly
 to make debugging a bit easier. In Go, the actual value is usually printed
 first; for example:

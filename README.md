@@ -7,15 +7,21 @@
 Lightweight test utilities to use with Go's testing package.
 
 ## Features
-* Assertions that make testss easier to read, write, and debug
+* Assertions that make tests easier to read, write, and debug
 * Streamlined data providers for data-driven testing (DDT)
 * Test hooks' hygiene check
 
 ## Motivations
+Testing is an integral part of Go; the language provides strong and opinionated
+support for testing. However, developers who moved from languages like C#, Java,
+and Python miss the convenience of test utilities like assertions and data
+providers for data-driven tests. That's why we started Tester: lightweight test
+utilities to use with Go's testing package.
+
 Most tests follow the same pattern: set up, invoke the unit under test, assert,
-then clean up (if need be); said pattern encourages code reuse and consistency.
-By using test utilities, you can spend more time thinking about test stratigies
-and less time typing boilerplate code.
+then clean up (if need be); said pattern encourages test code reuse
+and consistency. By using test utilities, you can spend more time thinking about
+test strategies and less time typing boilerplate code.
 
 ## Quick Start
 Get the latest version (`go get -u github.com/workfit/tester`) then test away:
@@ -24,6 +30,7 @@ Get the latest version (`go get -u github.com/workfit/tester`) then test away:
 
     import (
         "testing"
+
         "github.com/workfit/tester/assert"
     )
 
@@ -36,7 +43,7 @@ Get the latest version (`go get -u github.com/workfit/tester`) then test away:
     }
 
 ## Learn More
-The following can be also found at <https://godoc.org/github.com/workfit/tester>
+The following can also be found at <https://godoc.org/github.com/workfit/tester>
 
 ### Assertions
 Package `assert` provides a more readable way to assert in test cases;
@@ -46,7 +53,7 @@ for example:
 
 This way, the assert statement reads well; it flows like a proper sentence.
 
-In addition, one can easily tell which value is the test case got (actual)
+Also, one can easily tell which value is the test case got (actual)
 and which it wanted (expected); this is key to printing the values correctly
 to make debugging a bit easier. In Go, the actual value is usually printed
 first; for example:
@@ -67,7 +74,7 @@ Which are equivalent to:
     assert.For(t).ThatActual(foo).Equals(true)
     assert.For(t).ThatActual(len(bar)).Equals(0)
 
-To identify a test case in a table-driven test, optional ID parameters can be
+To identify a test case in a table-driven test, optional parameters can be
 specified and will be included in failure messages:
 
 	cases := []struct {
@@ -89,7 +96,7 @@ for post-assert actions to be performed; for example:
 
     assert.For(t).ThatActual(value).Equals(expected).ThenDiffOnFail()
 
-Which will pretty-print a detailed recursive diff of both objects on failure.
+That will pretty-print a detailed recursive diff of both objects on failure.
 
 It also can be used as a condition to perform extra test steps:
 
