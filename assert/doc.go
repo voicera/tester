@@ -30,19 +30,19 @@ Which are equivalent to:
 To identify a test case in a table-driven test, optional ID parameters can be
 specified and will be included in failure messages:
 
-	cases := []struct {
-		id       string
-		actual   interface{}
-		expected interface{}
-	}{
-		{"different values", 42, 13},
-		{"different types", 42.0, 42},
-		{"different containers", [...]int{42}, []int{42}},
-	}
+    cases := []struct {
+        id       string
+        actual   interface{}
+        expected interface{}
+    }{
+        {"different values", 42, 13},
+        {"different types", 42.0, 42},
+        {"different containers", [...]int{42}, []int{42}},
+    }
 
-	for _, c := range cases {
-		assert.For(t, c.id).ThatActual(c.actual).Equals(c.expected)
-	}
+    for _, c := range cases {
+        assert.For(t, c.id).ThatActual(c.actual).Equals(c.expected)
+    }
 
 After an assertion is performed, a ValueAssertionResult is returned to allow
 for post-assert actions to be performed; for example:
@@ -71,8 +71,8 @@ Conveniently, the last example above can be rewritten as:
 Another use is to print a custom failure message:
 
     assert.For(t).ThatActual(foo).Equals(bar).ThenRunOnFail(func(actual, expected interface{}) {
-		fmt.Printf("JSON: %q != %q", actual.ToJSON(), expected.ToJSON())
-	})
+        fmt.Printf("JSON: %q != %q", actual.ToJSON(), expected.ToJSON())
+    })
 
 The above pattern allows for reuse of post-failure analysis and cleanup.
 
