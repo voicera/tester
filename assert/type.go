@@ -1,8 +1,8 @@
 package assert
 
 import (
+	"go/ast"
 	"reflect"
-	"unicode"
 )
 
 // AssertableType represents an under-test type that's expected to meet
@@ -30,14 +30,15 @@ const (
 )
 
 func (actual *assertableType) HidesTestHooks() {
-	if len(actual.Name()) == 0 || !isExported(actual.Name()) { // anonymous or unexported type
+
+	if len(actual.Name()) == 0 || !ast.IsExported(actual.Name()) { // anonymous or unexported type
 		return
 	}
 
 	failedFields := []reflect.StructField{}
 	for i := 0; i < actual.NumField(); i++ {
 		field := actual.Field(i)
-		if tag := field.Tag.Get(TestHookTagKey); tag != "" && isExported(field.Name) {
+		if tag := field.Tag.Get(TestHookTagKey); tag != "" && ast.IsExported(field.Name) {
 			failedFields = append(failedFields, field)
 		}
 	}
@@ -45,10 +46,4 @@ func (actual *assertableType) HidesTestHooks() {
 	if len(failedFields) > 0 {
 		actual.testContext.decoratedErrorf("Type %s exports test-hook fields: %+v\n", actual.Name(), failedFields)
 	}
-}
-
-// isExported checks if a name is exported as per the spec
-// https://golang.org/ref/spec#Exported_identifiers (assuming ASCII names).
-func isExported(name string) bool {
-	return unicode.IsUpper(rune(name[0]))
 }
