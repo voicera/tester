@@ -6,7 +6,7 @@ to check before contributing.
 * Tester is opinionated
 * Tester is lightweight
 * Tester is intuitive
-* Tester is consitent
+* Tester is consistent
 
 ## Dependency Management
 Copy dependencies to the `vendor` folder.
@@ -45,22 +45,23 @@ and ending with helper functions and helper types.
 Keep line length under 120 characters for code and 80 for documentation.
 Break lines in a way that improves readability but still keeps the code compact;
 for example,
-
-    callable.testContext.errorf(
-        file, line, "Function call did not panic as expected.\nExpected: %s\n", expectedError)
-
+```go
+callable.testContext.errorf(
+    file, line, "Function call did not panic as expected.\nExpected: %s\n", expectedError)
+```
 is readable and more compact than
-
-    callable.testContext.errorf(
-        file,
-        line,
-        "Function call did not panic as expected.\nExpected: %s\n",
-        expectedError)
-
+```go
+callable.testContext.errorf(
+    file,
+    line,
+    "Function call did not panic as expected.\nExpected: %s\n",
+    expectedError)
+```
 Either is definitely more readable than
-
-    callable.testContext.errorf(file, line,
-        "Function call did not panic as expected.\nExpected: %s\n", expectedError)
+```go
+callable.testContext.errorf(file, line,
+    "Function call did not panic as expected.\nExpected: %s\n", expectedError)
+```
 
 #### Variable Names
 Do not prefer `c` to `lineCount`; see _Clean Code, Chapter 2: Meaningful Names_.
