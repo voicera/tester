@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/workfit/tester/assert"
-	"github.com/workfit/tester/ddt"
+	"github.com/voicera/tester/assert"
+	"github.com/voicera/tester/ddt"
 )
 
 func ExampleLoadTestCasesFromDerivedJSONFile() {

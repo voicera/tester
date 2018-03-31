@@ -1,8 +1,8 @@
 # Tester: Test More, Type Less
 
-[![Build Status](https://travis-ci.org/workfit/tester.svg?branch=master)](https://travis-ci.org/workfit/tester)
-[![Go Report Card](https://goreportcard.com/badge/github.com/workfit/tester)](https://goreportcard.com/report/github.com/workfit/tester)
-[![GoDoc](https://godoc.org/github.com/workfit/tester?status.svg)](https://godoc.org/github.com/workfit/tester)
+[![Build Status](https://travis-ci.org/voicera/tester.svg?branch=master)](https://travis-ci.org/voicera/tester)
+[![Go Report Card](https://goreportcard.com/badge/github.com/voicera/tester)](https://goreportcard.com/report/github.com/voicera/tester)
+[![GoDoc](https://godoc.org/github.com/voicera/tester?status.svg)](https://godoc.org/github.com/voicera/tester)
 
 Lightweight test utilities to use with Go's testing package.
 
@@ -24,7 +24,7 @@ and consistency. By using test utilities, you can spend more time thinking about
 test strategies and less time typing boilerplate code.
 
 ## Quick Start
-Get the latest version (`go get -u github.com/workfit/tester`) then test away:
+Get the latest version (`go get -u github.com/voicera/tester`) then test away:
 
 ```go
 package hitchhiker
@@ -32,7 +32,7 @@ package hitchhiker
 import (
     "testing"
 
-    "github.com/workfit/tester/assert"
+    "github.com/voicera/tester/assert"
 )
 
 func TestDeepThought(t *testing.T) {
@@ -45,7 +45,7 @@ func TestDeepThought(t *testing.T) {
 ```
 
 ## Learn More
-The following can also be found at <https://godoc.org/github.com/workfit/tester>
+The following can also be found at <https://godoc.org/github.com/voicera/tester>
 
 ### Assertions
 Package `assert` provides a more readable way to assert in test cases;

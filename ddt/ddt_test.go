@@ -5,8 +5,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/workfit/tester/assert"
-	"github.com/workfit/tester/ddt"
+	"github.com/voicera/tester/assert"
+	"github.com/voicera/tester/ddt"
 )
 
 const vanillaContent = `{
