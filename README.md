@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/voicera/tester.svg?branch=master)](https://travis-ci.org/voicera/tester)
 [![Go Report Card](https://goreportcard.com/badge/github.com/voicera/tester)](https://goreportcard.com/report/github.com/voicera/tester)
 [![GoDoc](https://godoc.org/github.com/voicera/tester?status.svg)](https://godoc.org/github.com/voicera/tester)
+[![Maintainability](https://api.codeclimate.com/v1/badges/5a77a77b9efb9bacb55d/maintainability)](https://codeclimate.com/github/voicera/tester/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/5a77a77b9efb9bacb55d/test_coverage)](https://codeclimate.com/github/voicera/tester/test_coverage)
 
 Lightweight test utilities to use with Go's testing package.
 
