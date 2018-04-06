@@ -8,9 +8,13 @@ type AssertableString interface {
 	// Returns a ValueAssertionResult that provides post-assert actions.
 	Equals(expected string) ValueAssertionResult
 
-	// IsEmpty asserts that the specified actual string is empty (zero length).
+	// IsEmpty asserts that the specified actual string is empty.
 	// Returns a ValueAssertionResult that provides post-assert actions.
 	IsEmpty() ValueAssertionResult
+
+	// IsNotEmpty asserts that the specified actual string is not empty.
+	// Returns a ValueAssertionResult that provides post-assert actions.
+	IsNotEmpty() ValueAssertionResult
 }
 
 type assertableString struct {
@@ -27,9 +31,17 @@ func (actual *assertableString) Equals(expected string) ValueAssertionResult {
 }
 
 func (actual *assertableString) IsEmpty() ValueAssertionResult {
-	isEmpty := len(actual.value) == 0
+	isEmpty := actual.value == ""
 	if !isEmpty {
 		actual.testContext.decoratedErrorf("String is not empty.\nActual: %q\n", actual.value)
 	}
 	return &valueAssertionResult{bool: isEmpty, actual: actual.value, expected: ""}
+}
+
+func (actual *assertableString) IsNotEmpty() ValueAssertionResult {
+	isEmpty := actual.value == ""
+	if isEmpty {
+		actual.testContext.decoratedErrorf("String is empty.\n")
+	}
+	return &valueAssertionResult{bool: !isEmpty, actual: actual.value, expected: "<any non-empty string>"}
 }

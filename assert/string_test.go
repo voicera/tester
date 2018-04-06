@@ -58,3 +58,21 @@ func ExampleAssertableValue_isEmptyFail() {
 	// "foo" != ""
 	// Assertion failed successfully!
 }
+
+func ExampleAssertableValue_isNotEmptyPass() {
+	if For(t).ThatActualString(" ").IsNotEmpty().Passed() {
+		fmt.Println("Passed!")
+	}
+	// Output: Passed!
+}
+
+func ExampleAssertableValue_isNotEmptyFail() {
+	if !mockTestContextToAssert().ThatActualString("").IsNotEmpty().ThenDiffOnFail().Passed() {
+		fmt.Println("Assertion failed successfully!")
+	}
+	// Output:
+	// file:3: String is empty.
+	// Diff:
+	// "" != "<any non-empty string>"
+	// Assertion failed successfully!
+}
