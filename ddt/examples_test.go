@@ -24,7 +24,7 @@ func ExampleLoadTestCasesFromDerivedJSONFile() {
 		} `json:"expected"`
 	}
 
-	mustWriteDerivedJSONFile(vanillaContent)
+	mustWriteJSONFile("ExampleLoadTestCasesFromDerivedJSONFile.json", vanillaContent)
 	err := ddt.LoadTestCasesFromDerivedJSONFile(&testCases)
 	if assert.For(t).ThatActual(err).IsNil().Passed() {
 		for _, c := range testCases {

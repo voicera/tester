@@ -175,18 +175,17 @@ When the number of test cases in a table-driven test gets out of hand and they
 cannot fit neatly in structs anymore, the use of a data provider is in order.
 Package `ddt` provides a way to load test cases from a JSON file whose path
 is derived from the caller's test function name and file. The file path is
-`<package under test>/_ddt/<basename of test file>.json`; for example,
-`hitchhiker/_ddt/question_test.json` with the following schema:
+`<package under test>/_ddt/<name of test function>.json`; for example,
+`hitchhiker/_ddt/TestDeepThought.json` with the following schema:
 
 ```json
 {
-  "testFunctions": {
-    "<name of test function>": [
-      {
+  "testCases": [
+    {
         <properties of the test case to unmarshal>
-      }
-    ]
-  }
+    },
+    ...
+  ]
 }
 ```
 
@@ -194,22 +193,22 @@ For example, the JSON content may look like the following:
 
 ```json
 {
-  "testFunctions": {
-    "TestDeepThought": [
-      {
-        "id": "The Ultimate Question",
-        "input": {
-          "question": "What do you get when you multiply six by nine?",
-          "timeoutInHours": 65700000000,
-          "config": {"base": 13}
-        },
-        "expected": {
-          "answer": "42",
-          "error": null
+  "testCases": [
+    {
+      "id": "The Ultimate Question",
+      "input": {
+        "question": "What do you get when you multiply six by nine?",
+        "timeoutInHours": 65700000000,
+        "config": {
+          "base": 13
         }
+      },
+      "expected": {
+        "answer": "42",
+        "error": null
       }
-    ]
-  }
+    }
+  ]
 }
 ```
 
