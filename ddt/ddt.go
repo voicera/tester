@@ -5,9 +5,12 @@ import (
 	"encoding/json"
 	"errors"
 	"io/ioutil"
-	"path"
 	"runtime"
 	"strings"
+)
+
+const (
+	cannotGetTestFunctionNameErrorMessage = "ddt: cannot determine test function name required to load JSON file"
 )
 
 type dataDrivenTest struct {
@@ -42,9 +45,11 @@ type dataDrivenTest struct {
 //
 // The details of the test case struct are left for the tester to specify.
 func LoadTestCasesFromDerivedJSONFile(testCasesToLoad interface{}) error {
-	callerProgramCounter, _, _, _ := runtime.Caller(1)
-	callerSegments := strings.Split(path.Base(runtime.FuncForPC(callerProgramCounter).Name()), ".")
-	testDataFilePath := "_ddt/" + callerSegments[1] + ".json"
+	testFunctionName, err := getTestFunctionName()
+	if err != nil {
+		return err
+	}
+	testDataFilePath := "_ddt/" + testFunctionName + ".json"
 
 	fileContent, err := ioutil.ReadFile(testDataFilePath)
 	if err != nil {
@@ -58,7 +63,23 @@ func LoadTestCasesFromDerivedJSONFile(testCasesToLoad interface{}) error {
 	}
 
 	if len(test.TestCases) == 0 {
-		return errors.New("ddt: cannot load test cases from " + callerSegments[1] + ".json")
+		return errors.New("ddt: cannot load test cases from " + testFunctionName + ".json")
 	}
 	return json.Unmarshal(test.TestCases, &testCasesToLoad)
+}
+
+func getTestFunctionName() (string, error) {
+	for stackFramesToSkip := 2; ; stackFramesToSkip++ {
+		callerProgramCounter, _, _, ok := runtime.Caller(stackFramesToSkip)
+		if !ok {
+			return "", errors.New(cannotGetTestFunctionNameErrorMessage)
+		}
+		functionFullPath := runtime.FuncForPC(callerProgramCounter).Name()
+		functionName := functionFullPath[strings.LastIndex(functionFullPath, ".")+1:]
+		if strings.HasPrefix(functionName, "Test") ||
+			strings.HasPrefix(functionName, "Benchmark") ||
+			strings.HasPrefix(functionName, "Example") {
+			return functionName, nil
+		}
+	}
 }
