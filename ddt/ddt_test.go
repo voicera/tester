@@ -38,27 +38,26 @@ const vanillaContent = `{
 
 func TestLoadTestCasesFromDerivedJSONFileWhenFileIsNotFound(t *testing.T) {
 	err := ddt.LoadTestCasesFromDerivedJSONFile(nil)
-	if assert.For(t).ThatActual(err).IsNotNil().Passed() {
+	if assert.For(t).ThatActualError(err).IsNotNil().Passed() {
 		expected := "open _ddt/TestLoadTestCasesFromDerivedJSONFileWhenFileIsNotFound.json: no such file or directory"
-		assert.For(t).ThatActualString(err.Error()).Equals(expected)
+		assert.For(t).ThatActualError(err).Equals(assert.ErrorString(expected))
 	}
 }
 
 func TestLoadTestCasesFromDerivedJSONFileWhenSchemaIsInvalid(t *testing.T) {
 	mustWriteJSONFile("TestLoadTestCasesFromDerivedJSONFileWhenSchemaIsInvalid.json", "{")
 	err := ddt.LoadTestCasesFromDerivedJSONFile(nil)
-	if assert.For(t).ThatActual(err).IsNotNil().Passed() {
-		expected := "unexpected end of JSON input"
-		assert.For(t).ThatActualString(err.Error()).Equals(expected)
+	if assert.For(t).ThatActualError(err).IsNotNil().Passed() {
+		assert.For(t).ThatActualError(err).Equals(assert.ErrorString("unexpected end of JSON input"))
 	}
 }
 
 func TestLoadTestCasesFromDerivedJSONFileWhenTestCasesAreMissing(t *testing.T) {
 	mustWriteJSONFile("TestLoadTestCasesFromDerivedJSONFileWhenTestCasesAreMissing.json", "{}")
 	err := ddt.LoadTestCasesFromDerivedJSONFile(nil)
-	if assert.For(t).ThatActual(err).IsNotNil().Passed() {
+	if assert.For(t).ThatActualError(err).IsNotNil().Passed() {
 		expected := "ddt: cannot load test cases from TestLoadTestCasesFromDerivedJSONFileWhenTestCasesAreMissing.json"
-		assert.For(t).ThatActualString(err.Error()).Equals(expected)
+		assert.For(t).ThatActualError(err).Equals(assert.ErrorString(expected))
 	}
 }
 

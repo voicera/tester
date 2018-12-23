@@ -41,6 +41,12 @@ type assertableValue struct {
 	value       interface{}
 }
 
+// anyOtherValue presents any other value but the expected.
+// Since it's a private type, no value passed to DoesNotEqual can be
+// equal to any instance of this type; hence, it can be used as an expected
+// value for the ValueAssertionResult returned by DoesNotEqual.
+type anyOtherValue struct{}
+
 func (actual *assertableValue) Equals(expected interface{}) ValueAssertionResult {
 	areEqual := reflect.DeepEqual(actual.value, expected)
 	if !areEqual {
@@ -77,9 +83,3 @@ func (actual *assertableValue) IsFalse() ValueAssertionResult {
 func (actual *assertableValue) IsTrue() ValueAssertionResult {
 	return actual.Equals(true)
 }
-
-// anyOtherValue presents any other value but the expected.
-// Since it's a private type, no value passed to DoesNotEqual can be
-// equal to any instance of this type; hence, it can be used as an expected
-// value for the ValueAssertionResult returned by DoesNotEqual.
-type anyOtherValue struct{}

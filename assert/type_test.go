@@ -2,7 +2,7 @@ package assert
 
 import "reflect"
 
-func ExampleAssertableType_hidesTestHooksPass() {
+func ExampleAssertableType_HidesTestHooks_pass() {
 	type EmptyType struct{}
 	type ExportedType struct{}
 	type ExportedPointerType struct{}
@@ -35,7 +35,7 @@ func ExampleAssertableType_hidesTestHooksPass() {
 	// Output:
 }
 
-func ExampleAssertableType_hidesTestHooksExportedTestHooks() {
+func ExampleAssertableType_HidesTestHooks_exportedTestHooks() {
 	type ExportedPointerType struct{}
 	type ExportedType struct{}
 	type ExposedFieldsType struct {

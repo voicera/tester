@@ -1,15 +1,18 @@
 package assert
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
-func ExampleAssertableValue_equalsPass() {
+func ExampleAssertableValue_Equals_pass() {
 	if For(t).ThatActual([]int{42}).Equals([]int{42}).Passed() {
 		fmt.Println("Passed!")
 	}
 	// Output: Passed!
 }
 
-func ExampleAssertableValue_equalsFail() {
+func ExampleAssertableValue_Equals_fail() {
 	cases := []struct {
 		id       string
 		actual   interface{}
@@ -40,14 +43,25 @@ func ExampleAssertableValue_equalsFail() {
 	// Assertion failed successfully!
 }
 
-func ExampleAssertableValue_doesNotEqualPass() {
+func ExampleAssertableValue_Equals_withErrors() {
+	if !mockTestContextToAssert().ThatActual(errors.New("foo")).Equals(ErrorString("foo")).Passed() {
+		fmt.Println("Don't use ThatActual with errors — use ThatActualError instead!")
+	}
+	// Output:
+	// file:3: Type mismatch.
+	// Actual: *errors.errorString=foo
+	// Expected: assert.ErrorString=foo
+	// Don't use ThatActual with errors — use ThatActualError instead!
+}
+
+func ExampleAssertableValue_DoesNotEqual_pass() {
 	if For(t).ThatActual(42).DoesNotEqual(13).Passed() {
 		fmt.Println("Passed!")
 	}
 	// Output: Passed!
 }
 
-func ExampleAssertableValue_doesNotEqualFail() {
+func ExampleAssertableValue_DoesNotEqual_fail() {
 	if !mockTestContextToAssert().ThatActual(42).DoesNotEqual(42).ThenDiffOnFail().Passed() {
 		fmt.Println("Assertion failed successfully!")
 	}
@@ -59,14 +73,14 @@ func ExampleAssertableValue_doesNotEqualFail() {
 	// Assertion failed successfully!
 }
 
-func ExampleAssertableValue_isNilPass() {
+func ExampleAssertableValue_IsNil_pass() {
 	if For(t).ThatActual(nil).IsNil().Passed() {
 		fmt.Println("Passed!")
 	}
 	// Output: Passed!
 }
 
-func ExampleAssertableValue_isNilFail() {
+func ExampleAssertableValue_IsNil_fail() {
 	if !mockTestContextToAssert().ThatActual(42).IsNil().Passed() {
 		fmt.Println("Assertion failed successfully!")
 	}
@@ -77,14 +91,14 @@ func ExampleAssertableValue_isNilFail() {
 	// Assertion failed successfully!
 }
 
-func ExampleAssertableValue_isNotNilPass() {
+func ExampleAssertableValue_IsNotNil_pass() {
 	if For(t).ThatActual(42).IsNotNil().Passed() {
 		fmt.Println("Passed!")
 	}
 	// Output: Passed!
 }
 
-func ExampleAssertableValue_isNotNilFail() {
+func ExampleAssertableValue_IsNotNil_fail() {
 	if !mockTestContextToAssert().ThatActual(nil).IsNotNil().ThenDiffOnFail().Passed() {
 		fmt.Println("Assertion failed successfully!")
 	}
@@ -96,14 +110,14 @@ func ExampleAssertableValue_isNotNilFail() {
 	// Assertion failed successfully!
 }
 
-func ExampleAssertableValue_isFalsePass() {
+func ExampleAssertableValue_IsFalse_pass() {
 	if For(t).ThatActual(false).IsFalse().Passed() {
 		fmt.Println("Passed!")
 	}
 	// Output: Passed!
 }
 
-func ExampleAssertableValue_isFalseFail() {
+func ExampleAssertableValue_IsFalse_fail() {
 	if !mockTestContextToAssert().ThatActual(true).IsFalse().Passed() {
 		fmt.Println("Assertion failed successfully!")
 	}
@@ -114,14 +128,14 @@ func ExampleAssertableValue_isFalseFail() {
 	// Assertion failed successfully!
 }
 
-func ExampleAssertableValue_isTruePass() {
+func ExampleAssertableValue_IsTrue_pass() {
 	if For(t).ThatActual(true).IsTrue().Passed() {
 		fmt.Println("Passed!")
 	}
 	// Output: Passed!
 }
 
-func ExampleAssertableValue_isTrueFail() {
+func ExampleAssertableValue_IsTrue_fail() {
 	if !mockTestContextToAssert().ThatActual(false).IsTrue().Passed() {
 		fmt.Println("Assertion failed successfully!")
 	}

@@ -26,15 +26,14 @@ func ExampleLoadTestCasesFromDerivedJSONFile() {
 
 	mustWriteJSONFile("ExampleLoadTestCasesFromDerivedJSONFile.json", vanillaContent)
 	err := ddt.LoadTestCasesFromDerivedJSONFile(&testCases)
-	if assert.For(t).ThatActual(err).IsNil().Passed() {
+	if assert.For(t).ThatActualError(err).IsNil().Passed() {
 		for _, c := range testCases {
 			a, err := answer(c.Input.Question, c.Input.TimeoutInHours, c.Input.Config)
 			assert.For(t, c.ID).ThatActual(a).Equals(c.Expected.Answer)
-			assert.For(t, c.ID).ThatActual(err).Equals(c.Expected.Error)
+			assert.For(t, c.ID).ThatActualError(err).Equals(c.Expected.Error)
 			fmt.Println("Actual Answer:", a)
 		}
 	}
-
 	// Output:
 	// Actual Answer: 42
 	// Actual Answer: 42

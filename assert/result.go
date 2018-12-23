@@ -33,6 +33,10 @@ type ValueAssertionResult interface {
 	// Returns the current ValueAssertionResult to allow for call-chaining.
 	ThenDiffOnFail() ValueAssertionResult
 
+	// ThenPrettyPrintOnFail pretty-prints asserted values on assertion failure;
+	// Returns the current ValueAssertionResult to allow for call-chaining.
+	ThenPrettyPrintOnFail() ValueAssertionResult
+
 	// ThenRunOnFail performed the specified action on assertion failure;
 	// in which case, it passes the actual and expected values used in
 	// the failed assertion as parameters to the specified function.
@@ -52,6 +56,10 @@ func (result *valueAssertionResult) Passed() bool {
 
 func (result *valueAssertionResult) ThenDiffOnFail() ValueAssertionResult {
 	return result.ThenRunOnFail(PrintDiff)
+}
+
+func (result *valueAssertionResult) ThenPrettyPrintOnFail() ValueAssertionResult {
+	return result.ThenRunOnFail(PrettyPrint)
 }
 
 func (result *valueAssertionResult) ThenRunOnFail(action func(actual, expected interface{})) ValueAssertionResult {

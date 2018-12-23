@@ -40,7 +40,7 @@ import (
 func TestDeepThought(t *testing.T) {
     computer := NewDeepThoughtComputer()
     answer, err := computer.AnswerTheUltimateQuestion()
-    if assert.For(t).ThatActual(err).IsNil().Passed() {
+    if assert.For(t).ThatActualError(err).IsNil().Passed() {
         assert.For(t).ThatActual(answer).Equals(42)
     }
 }

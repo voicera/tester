@@ -30,7 +30,6 @@ const (
 )
 
 func (actual *assertableType) HidesTestHooks() {
-
 	if len(actual.Name()) == 0 || !ast.IsExported(actual.Name()) { // anonymous or unexported type
 		return
 	}

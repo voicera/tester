@@ -2,14 +2,14 @@ package assert
 
 import "fmt"
 
-func ExampleAssertableString_equalsPass() {
+func ExampleAssertableString_Equals_pass() {
 	if For(t).ThatActualString("foo").Equals("foo").Passed() {
 		fmt.Println("Passed!")
 	}
 	// Output: Passed!
 }
 
-func ExampleAssertableString_equalsFail() {
+func ExampleAssertableString_Equals_fail() {
 	cases := []struct {
 		id       string
 		actual   string
@@ -40,14 +40,14 @@ func ExampleAssertableString_equalsFail() {
 	// Assertion failed successfully!
 }
 
-func ExampleAssertableValue_isEmptyPass() {
+func ExampleAssertableString_IsEmpty_pass() {
 	if For(t).ThatActualString("").IsEmpty().Passed() {
 		fmt.Println("Passed!")
 	}
 	// Output: Passed!
 }
 
-func ExampleAssertableValue_isEmptyFail() {
+func ExampleAssertableString_IsEmpty_fail() {
 	if !mockTestContextToAssert().ThatActualString("foo").IsEmpty().ThenDiffOnFail().Passed() {
 		fmt.Println("Assertion failed successfully!")
 	}
@@ -59,14 +59,14 @@ func ExampleAssertableValue_isEmptyFail() {
 	// Assertion failed successfully!
 }
 
-func ExampleAssertableValue_isNotEmptyPass() {
+func ExampleAssertableString_IsNotEmpty_pass() {
 	if For(t).ThatActualString(" ").IsNotEmpty().Passed() {
 		fmt.Println("Passed!")
 	}
 	// Output: Passed!
 }
 
-func ExampleAssertableValue_isNotEmptyFail() {
+func ExampleAssertableString_IsNotEmpty_fail() {
 	if !mockTestContextToAssert().ThatActualString("").IsNotEmpty().ThenDiffOnFail().Passed() {
 		fmt.Println("Assertion failed successfully!")
 	}

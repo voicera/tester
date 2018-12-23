@@ -22,9 +22,12 @@ type TestContext interface {
 	// expected to meet certain criteria.
 	ThatActual(value interface{}) AssertableValue
 
+	// ThatActualError adapts the specified error to an assertable one that's
+	// expected to meet certain criteria.
+	ThatActualError(value error) AssertableError
+
 	// ThatActualString adapts the specified string to an assertable one that's
 	// expected to meet certain criteria.
-	// TODO rename to ThatActualString
 	ThatActualString(value string) AssertableString
 
 	// ThatType adapts the specified type to an assertable one that's
@@ -64,6 +67,10 @@ func (testContext *testContext) ThatActual(value interface{}) AssertableValue {
 	return &assertableValue{testContext: testContext, value: value}
 }
 
+func (testContext *testContext) ThatActualError(value error) AssertableError {
+	return &assertableError{testContext: testContext, value: value}
+}
+
 func (testContext *testContext) ThatActualString(value string) AssertableString {
 	return &assertableString{testContext: testContext, value: value}
 }
@@ -80,6 +87,14 @@ func PrintDiff(actual interface{}, expected interface{}) {
 
 	fmt.Println("Diff:")
 	pretty.Fdiff(os.Stdout, actual, expected)
+}
+
+// PrettyPrint pretty-prints the specified actual and expected values,
+// in that order.
+func PrettyPrint(actual interface{}, expected interface{}) {
+	printLock.Lock()
+	defer printLock.Unlock()
+	pretty.Printf("Pretty:\nActual: %s\nExpected: %s\n", actual, expected)
 }
 
 func (testContext *testContext) decoratedErrorf(format string, args ...interface{}) {

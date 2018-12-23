@@ -6,6 +6,10 @@ import (
 	"testing"
 )
 
+var (
+	t = &testing.T{}
+)
+
 func TestHooksAreHidden(t *testing.T) {
 	For(t).ThatType(reflect.TypeOf(testContext{})).HidesTestHooks()
 }
@@ -21,8 +25,6 @@ func TestCaller(t *testing.T) {
 func pack(elements ...interface{}) []interface{} {
 	return elements
 }
-
-var t = &testing.T{}
 
 // mockTestContextToAssert mocks a test context to use for assertions.
 // The optional parameter(s) can be used to identify a specific test case
