@@ -6,12 +6,14 @@ import (
 )
 
 func ExampleAssertableError_Equals_pass() {
+	var nilError *ErrorString
 	cases := []struct {
 		id       string
 		actual   error
 		expected error
 	}{
-		{"both are nil", nil, nil},
+		{"nil interfaces", nil, nil},
+		{"nil interface and nil pointer", nil, nilError},
 		{"same type and message", errors.New("foo"), errors.New("foo")},
 		{"different struct types, same message", ErrorString("foo"), errors.New("foo")},
 	}
@@ -22,7 +24,8 @@ func ExampleAssertableError_Equals_pass() {
 		}
 	}
 	// Output:
-	// Passed: both are nil
+	// Passed: nil interfaces
+	// Passed: nil interface and nil pointer
 	// Passed: same type and message
 	// Passed: different struct types, same message
 }

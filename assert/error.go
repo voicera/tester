@@ -1,5 +1,7 @@
 package assert
 
+import "reflect"
+
 // AssertableError represents an under-test error that's expected to meet
 // certain criteria.
 type AssertableError interface {
@@ -34,7 +36,8 @@ func (err ErrorString) Error() string {
 }
 
 func (actual *assertableError) Equals(expected error) ValueAssertionResult {
-	if expected == nil {
+	// Allow reflect to check for nil expected error as that object could have been loaded from JSON file (for DDT)
+	if expected == nil || (reflect.ValueOf(expected).Kind() == reflect.Ptr && reflect.ValueOf(expected).IsNil()) {
 		return actual.IsNil()
 	}
 	if actual.value == nil {
@@ -50,14 +53,14 @@ func (actual *assertableError) Equals(expected error) ValueAssertionResult {
 }
 
 func (actual *assertableError) IsNil() ValueAssertionResult {
-	if actual.value != nil {
+	if actual.value != nil { // no reflection here as we want to verify that the interface itself is not nil
 		actual.testContext.decoratedErrorf("Actual error was not <nil>.\nActual: %v\n", actual.value)
 	}
 	return &valueAssertionResult{bool: actual.value == nil, actual: actual.value, expected: nil}
 }
 
 func (actual *assertableError) IsNotNil() ValueAssertionResult {
-	if actual.value == nil {
+	if actual.value == nil { // no reflection here as we want to verify that the interface itself is nil
 		actual.testContext.decoratedErrorf("Actual error was <nil>.\n")
 	}
 	return &valueAssertionResult{bool: actual.value != nil, actual: actual.value, expected: &anyOtherValue{}}
