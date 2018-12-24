@@ -60,6 +60,52 @@ func ExampleAssertableError_Equals_fail() {
 	// Assertion failed successfully!
 }
 
+func ExampleAssertableError_FormatsAs_pass() {
+	cases := []struct {
+		id       string
+		actual   error
+		expected string
+	}{
+		{"same type and message", ErrorString("foo"), "foo"},
+		{"different struct types, same message", errors.New("foo"), "foo"},
+	}
+
+	for _, c := range cases {
+		if For(t, c.id).ThatActualError(c.actual).FormatsAs(c.expected).Passed() {
+			fmt.Println("Passed: " + c.id)
+		}
+	}
+	// Output:
+	// Passed: same type and message
+	// Passed: different struct types, same message
+}
+
+func ExampleAssertableError_FormatsAs_fail() {
+	cases := []struct {
+		id       string
+		actual   error
+		expected string
+	}{
+		{"actual is nil while expected isn't", nil, "foo"},
+		{"different messages", ErrorString("foo"), "bar"},
+	}
+
+	for _, c := range cases {
+		if !mockTestContextToAssert(c.id).ThatActualError(c.actual).FormatsAs(c.expected).Passed() {
+			fmt.Println("Assertion failed successfully!")
+		}
+	}
+	// Output:
+	// file:3: [actual is nil while expected isn't] Error mismatch.
+	// Actual was <nil>.
+	// Expected: foo
+	// Assertion failed successfully!
+	// file:3: [different messages] Error mismatch.
+	// Actual: foo
+	// Expected: bar
+	// Assertion failed successfully!
+}
+
 func ExampleAssertableError_IsNil_pass() {
 	if For(t).ThatActualError(nil).IsNil().Passed() {
 		fmt.Println("Passed!")

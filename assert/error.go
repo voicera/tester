@@ -9,6 +9,11 @@ type AssertableError interface {
 	// Returns a ValueAssertionResult that provides post-assert actions.
 	Equals(expected error) ValueAssertionResult
 
+	// FormatsAs asserts that the specified actual error formats as expected.
+	// The specified text is wrapped in an ErrorString object for comparison.
+	// Returns a ValueAssertionResult that provides post-assert actions.
+	FormatsAs(text string) ValueAssertionResult
+
 	// IsNil asserts that the specified actual error is nil.
 	// Returns a ValueAssertionResult that provides post-assert actions.
 	IsNil() ValueAssertionResult
@@ -28,7 +33,12 @@ type assertableError struct {
 //
 //     assert.For(t).ThatActualError(err).Equals(assert.ErrorString("foo"))
 //
-// The assert library compares errors by comapring the output of Error().
+// We compare errors by comapring the output of Error(), which is used to format
+// the error when printed. Here's a convenient way to rewrite the above:
+//
+//     assert.For(t).ThatActualError(err).FormatsAs("foo")
+//
+// The specified text is wrapped in an ErrorString object for comparison.
 type ErrorString string
 
 func (err ErrorString) Error() string {
@@ -50,6 +60,10 @@ func (actual *assertableError) Equals(expected error) ValueAssertionResult {
 		actual.testContext.decoratedErrorf("Error mismatch.\nActual: %s\nExpected: %s\n", actual.value, expected)
 	}
 	return &valueAssertionResult{bool: areEqual, actual: actual.value, expected: expected}
+}
+
+func (actual *assertableError) FormatsAs(text string) ValueAssertionResult {
+	return actual.Equals(ErrorString(text))
 }
 
 func (actual *assertableError) IsNil() ValueAssertionResult {
