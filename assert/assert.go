@@ -8,6 +8,7 @@ import (
 	"strings"
 	"sync"
 	"testing"
+	"time"
 
 	"github.com/kr/pretty"
 )
@@ -29,6 +30,10 @@ type TestContext interface {
 	// ThatActualString adapts the specified string to an assertable one that's
 	// expected to meet certain criteria.
 	ThatActualString(value string) AssertableString
+
+	// ThatActualTime adapts the specified time to an assertable one that's
+	// expected to meet certain criteria.
+	ThatActualTime(value *time.Time) AssertableTime
 
 	// ThatType adapts the specified type to an assertable one that's
 	// expected to meet certain criteria.
@@ -73,6 +78,10 @@ func (testContext *testContext) ThatActualError(value error) AssertableError {
 
 func (testContext *testContext) ThatActualString(value string) AssertableString {
 	return &assertableString{testContext: testContext, value: value}
+}
+
+func (testContext *testContext) ThatActualTime(value *time.Time) AssertableTime {
+	return &assertableTime{testContext: testContext, value: value}
 }
 
 func (testContext *testContext) ThatType(t reflect.Type) AssertableType {
