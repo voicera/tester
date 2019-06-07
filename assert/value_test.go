@@ -145,3 +145,32 @@ func ExampleAssertableValue_IsTrue_fail() {
 	// Expected: true
 	// Assertion failed successfully!
 }
+
+func ExampleAssertableValue_MarshalsEquivalentJSON_pass() {
+	foo := &struct {
+		Key string `json:"key"`
+	}{
+		Key: "value",
+	}
+	equivalentToFoo := &struct {
+		Key string `json:"key"`
+	}{
+		Key: "value",
+	}
+
+	if For(t).ThatActual(foo).MarshalsEquivalentJSON(equivalentToFoo).Passed() {
+		fmt.Println("Passed!")
+	}
+	// Output: Passed!
+}
+
+func ExampleAssertableValue_MarshalsEquivalentJSON_fail() {
+	if !mockTestContextToAssert().ThatActual(nil).MarshalsEquivalentJSON("").Passed() {
+		fmt.Println("Assertion failed successfully!")
+	}
+	// Output:
+	// file:3: JSON mismatch.
+	// Actual: null
+	// Expected: ""
+	// Assertion failed successfully!
+}
